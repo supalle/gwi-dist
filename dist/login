@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>环焊缝检测系统</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/core.min.js"
+			integrity="sha512-t8vdA86yKUE154D1VlNn78JbDkjv3HxdK/0MJDMBUXUjshuzRgET0ERp/0MAgYS+8YD9YmFwnz6+FWLz1gRZaw=="
+			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/x64-core.min.js"
+			integrity="sha512-tNYICRDqCrXYTs49IF9PkDrFhc928gh7V0mDsfEGMEjrxK2GbDlOag3oeYEB4RqsKolV2AyzKw6eMiconXqeiw=="
+			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha512.min.js"
+			integrity="sha512-iVz09aQOY2fbdnKQh7kJ0Q9h2ZVjMsql2IT6mI+qziZdJ7bT/guIovUCCE5bx1qzc4mnnUKyGkArkkGJ1zap0g=="
+			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<style type="text/css">
+			body {
+				background: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171');
+				background-repeat: no-repeat;
+				background-size: 100%;
+			}
+
+			.login-box {
+				width: 80vw;
+				max-width: 380px;
+				height: 100vh;
+				margin: 0 auto;
+			}
+
+			.center-box {
+				margin-top: 30vh;
+			}
+
+			h3 {
+				font-size: 36px;
+				text-align: center;
+			}
+
+			.inputs-box {
+				/* border-radius: 5px; */
+				border: 1px solid #e9e9e9;
+				box-shadow: 0 0 2px 2px #f8f8f8;
+				margin: 20px;
+				padding: 20px 5px;
+				color: #595959;
+			}
+
+			.input-item {
+				height: 36px;
+				line-height: 36px;
+				margin: 10px;
+				display: flex;
+				justify-content: center;
+				font-size: 16px;
+				border: 1px solid rgba(0, 0, 0, 0.25);
+			}
+
+			.input-item span {
+				display: inline-block;
+				flex: 0 0 52px;
+				text-align: center;
+				padding-right: 5px;
+				background-color: #f8f8f8;
+				border-right: 1px solid #E9E9E9;
+			}
+
+			.input-item input {
+				font-size: 18px;
+				flex: 1;
+				padding: 0 5px;
+				border: none;
+				outline: none;
+				color: #595959;
+			}
+
+			.input-item button {
+				width: 100%;
+				height: 100%;
+				border: none;
+				outline: none;
+				color: #f7f7f7;
+				font-weight: bold;
+				font-size: 18px;
+				background-color: #009688;
+				cursor: pointer;
+			}
+
+			.input-item button:hover {
+				color: #FFF;
+			}
+
+			.input-item input:focus,
+			.input-item input:hover {
+				border: none;
+				outline: none;
+			}
+
+			/*  */
+			input::-webkit-input-placeholder {
+				/* WebKit, Blink, Edge */
+				color: #ccc;
+				font-size: 14px;
+			}
+
+			:-moz-placeholder {
+				/* Mozilla Firefox 4 to 18 */
+				color: #ccc;
+				font-size: 14px;
+			}
+
+			::-moz-placeholder {
+				/* Mozilla Firefox 19+ */
+				color: #ccc;
+				font-size: 14px;
+			}
+
+			input:-ms-input-placeholder {
+				/* Internet Explorer 10-11 */
+				color: #ccc;
+				font-size: 14px;
+			}
+
+			input::-ms-input-placeholder {
+				/* Microsoft Edge */
+				color: #ccc;
+				font-size: 14px;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div class="login-box">
+			<div class="center-box">
+				<div class="title">
+					<h3>环焊缝检测系统</h3>
+				</div>
+				<div class="inputs-box">
+					<div class="input-item">
+						<span>IP</span>
+						<input id="ipAddress" type="text" placeholder="设备的IP地址" />
+					</div>
+					<div class="input-item">
+						<span>端口</span>
+						<input id="port" type="text" placeholder="1 ~ 65535" />
+					</div>
+					<div class="input-item">
+						<span>密码</span>
+						<input id="password" type="password" placeholder="设备的访问密码" />
+					</div>
+					<div class="input-item">
+						<button id="loginButton" onclick="login()">登 录</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<a id="joinLink" href="#" style="display: none;" target="_blank"></a>
+		<script type="text/javascript">
+			// Authorization
+			function login() {
+				var ipAddress = document.getElementById("ipAddress").value;
+				var port = document.getElementById("port").value;
+				var password = document.getElementById("password").value;
+
+				var passwordHash = CryptoJS.SHA512(password).toString(CryptoJS.enc.Hex);
+
+				var url = "http://" + ipAddress + ":" + port + "/?Authorization=" + passwordHash;
+				var joinLink = document.getElementById("joinLink");
+				joinLink.setAttribute("href", url);
+				joinLink.click();
+
+			}
+		</script>
+	</body>
+</html>
