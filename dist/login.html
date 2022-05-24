@@ -163,7 +163,7 @@
 
 				var passwordHash = CryptoJS.SHA512(password).toString(CryptoJS.enc.Hex);
 
-				var url = "http://" + ipAddress + ":" + port + "/?Authorization=" + passwordHash;
+				var url = "http://" + ipAddress + ":" + port + "/?Authorization=" + passwordHash + "&loginPageURL=" + encodeURI(location);
 				var joinLink = document.getElementById("joinLink");
 				joinLink.setAttribute("href", url);
 				joinLink.click();
